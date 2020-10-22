@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -40,6 +41,30 @@ namespace Conways_Game_Of_Life {
                 Thread.Sleep(250);
                 iterations++;
             }
+        }
+
+        public void ReadBoardFromFile(string filePath, char aliveChar) {
+            try {
+                string[] lines = File.ReadAllLines(filePath);
+                height = lines.Length;
+                width = lines[0].Length;
+
+                Init();
+
+                for (int i = 0; i < height; i++) {
+                    for (int j = 0; j < width; j++) {
+                        if (lines[i][j] == aliveChar) {
+                            board[i, j] = true;
+                        }
+                    }
+                }
+
+
+            } catch (Exception e) {
+                Console.WriteLine(e);
+            }
+
+
         }
 
         public void ClearBoard() {
