@@ -4,16 +4,11 @@ using System.Threading;
 namespace Conways_Game_Of_Life {
     class Start {
         static void Main(string[] args) {
-            Game game = new Game(20, 20);
+            Game game = new Game(30, 30);
 
-            game.SetRandom(50);
+            game.SetRandom(100);
 
-            while (!game.HasTermianted()) {
-                Console.Clear();
-                game.PrintBoard();
-                game.Update();
-                Thread.Sleep(300);
-            }
+            game.Start();
 
 
 

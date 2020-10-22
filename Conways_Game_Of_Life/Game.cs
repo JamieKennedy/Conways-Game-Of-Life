@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace Conways_Game_Of_Life {
     class Game {
@@ -10,16 +13,33 @@ namespace Conways_Game_Of_Life {
         private bool[,] board;
         private bool[,] tmpBoard;
 
+        private Dictionary<string, int> states;
+
+        int iterations;
+
         public Game(int width, int height) {
             this.width = width;
             this.height = height;
 
+            states = new Dictionary<string, int>();
             Init();
         }
 
         private void Init() {
             board = new bool[height, width];
             ClearBoard();
+        }
+
+        public void Start() {
+            iterations = 0;
+
+            while (!HasTermianted()) {
+                Console.Clear();
+                PrintBoard();
+                Update();
+                Thread.Sleep(250);
+                iterations++;
+            }
         }
 
         public void ClearBoard() {
@@ -36,7 +56,7 @@ namespace Conways_Game_Of_Life {
                     if (board[i, j]) {
                         Console.Write('#');
                     } else {
-                        Console.Write('.');
+                        Console.Write(' ');
                     }
                 }
                 Console.Write("\n");
@@ -164,15 +184,13 @@ namespace Conways_Game_Of_Life {
         }
 
         public bool HasTermianted() {
-            for (int i = 0; i < height; i++) {
-                for (int j = 0; j < width; j++) {
-                    if (board[i, j]) {
-                        return false;
-                    }
-                }
+            if (states.ContainsKey(string.Join(",", board.Cast<bool>()))) {
+                Console.WriteLine($"Terminated becuase duplicate state found on iteration {iterations}, the system is stable");
+                return true;
+            } else {
+                states.Add(string.Join(",", board.Cast<bool>()), iterations);
+                return false;
             }
-
-            return true;
         }
     }
 }
