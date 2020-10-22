@@ -56,7 +56,7 @@ namespace Conways_Game_Of_Life {
                     if (board[i, j]) {
                         Console.Write('#');
                     } else {
-                        Console.Write(' ');
+                        Console.Write('.');
                     }
                 }
                 Console.Write("\n");
