@@ -17,21 +17,21 @@ namespace Conways_Game_Of_Life {
         }
 
         private void Init() {
-            board = new bool[width, height];
+            board = new bool[height, width];
             ClearBoard();
         }
 
         public void ClearBoard() {
-            for (int i = 0; i < width; i++) {
-                for (int j = 0; j < height; j++) {
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
                     board[i, j] = false;
                 }
             }
         }
 
         public void PrintBoard() {
-            for (int i = 0; i < width; i++) {
-                for (int j = 0; j < height; j++) {
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
                     if (board[i, j]) {
                         Console.Write('#');
                     } else {
@@ -40,6 +40,25 @@ namespace Conways_Game_Of_Life {
                 }
                 Console.Write("\n");
             }
+            Console.WriteLine();
+        }
+
+        public void SetCell(int i, int j) {
+            if (IsInBounds(i, j)) {
+                board[j, i] = true;
+            } else {
+                Console.WriteLine("Provided coordiantes are not within bounds");
+            }
+        }
+
+        private bool IsInBounds(int i, int j) {
+            if (i >= 0 && i < width) {
+                if (j >= 0 && j < height) {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
